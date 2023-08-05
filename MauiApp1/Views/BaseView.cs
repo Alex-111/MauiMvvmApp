@@ -5,6 +5,7 @@ namespace MauiApp1.Views;
 public partial class BaseView   : ContentPage  
 {
     private readonly BaseViewModel  vm;
+   
 
     public BaseView(BaseViewModel vm)
     {
@@ -14,21 +15,22 @@ public partial class BaseView   : ContentPage
         this.vm = vm;
     }
 
-    private async void BaseView_Loaded(object sender, EventArgs e)
+    private void BaseView_Loaded(object sender, EventArgs e)
     {
-        await vm.OnPageLoadedAsync();
+        vm.RunOnPageLoaded();
     }
 
-    protected override async void OnAppearing()
+    protected override   void OnAppearing()
     {
         base.OnAppearing();
-        await vm.OnAppearingAsync();
+        vm.RunOnAppearing( );
     }
 
 
-    protected override async void OnDisappearing()
+    protected override   void OnDisappearing()
     {
+        
         base.OnDisappearing();
-        await vm.OnDisappearingAsync();
+          vm.RunOnDisappearing();
     }
 }

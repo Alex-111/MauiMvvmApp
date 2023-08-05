@@ -1,5 +1,4 @@
-﻿using Java.Lang;
-using MauiApp1.ViewModels;
+﻿using MauiApp1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,21 +20,31 @@ namespace MauiApp1
         {
             return NavigateAsync<ViewModelParameterBase>(path, null, clearStack);
         }
-        public async Task NavigateAsync<T>(string path, T parameter = null,  bool clearStack = false) where T : class
+        public async Task NavigateAsync<T>(string path, T parameter = null, bool clearStack = false) where T : class
         {
-            if (clearStack)
-            {
-                var navigation = Shell.Current.Navigation;
-                var pages = navigation.NavigationStack;
-                for (var i = pages.Count - 1; i >= 1; i--)
+           
+
+                if (clearStack)
                 {
-                    navigation.RemovePage(pages[i]);
+                    var navigation = Shell.Current.Navigation;
+                    var pages = navigation.NavigationStack;
+
+                foreach (var item in pages.ToList())
+                {
+                    if (item!= null) navigation.RemovePage(item);
                 }
-            }
-            //App.Current.MainPage = shell;
 
-            await Shell.Current.GoToAsync(path, new Dictionary<string, object>() { ["P"] = parameter});
+                    //for (var i = pages.Count - 1; i >= 1; i--)
+                    //{
 
+                    //    navigation.RemovePage(pages[i]);
+                    //}
+                }
+                //App.Current.MainPage = shell;
+
+                await Shell.Current.GoToAsync(path, new Dictionary<string, object>() { ["P"] = parameter });
+
+           
 
         }
     }

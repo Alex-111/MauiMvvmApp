@@ -9,12 +9,29 @@ namespace MauiApp1.ViewModels
 {
     public class BaseViewModel  : ObservableObject 
     {
+        public  CancellationTokenSource cancellationTokenSource => new CancellationTokenSource();
 
-        public virtual async Task OnPageLoadedAsync( )
+
+        public async void RunOnPageLoaded()
+        {
+            await OnPageLoadedAsync(cancellationTokenSource.Token);
+        }
+        public async void RunOnAppearing()
+        {
+            await OnAppearingAsync(cancellationTokenSource.Token);
+        }
+
+        public async void RunOnDisappearing()
+        {
+            cancellationTokenSource.Cancel();
+            await OnDisappearingAsync();
+        }
+
+        public virtual async Task OnPageLoadedAsync(CancellationToken cancellationToken  )
         {
 
         }
-        public virtual async Task OnAppearingAsync( )
+        public virtual async Task OnAppearingAsync(CancellationToken cancellationToken  )
         {
 
         }

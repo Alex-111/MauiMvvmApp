@@ -33,19 +33,22 @@ namespace MauiApp1.ViewModels
 
         }
 
+        
+
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            Debug.WriteLine(e.Exception.ToString());
+            Debug.WriteLine(e.Exception.ToString()); 
         }
 
+       
 
 
         public AsyncRelayCommand OnButtonClick   => 
-            new AsyncRelayCommand(async () =>
+            new AsyncRelayCommand(async (cancel) =>
             {
 
                 
-                throw new Exception();
+                //throw new Exception();
                 await _navigationService.NavigateAsync(nameof(NewPage2));
             });
 
