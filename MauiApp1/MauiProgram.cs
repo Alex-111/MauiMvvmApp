@@ -28,6 +28,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<AppShell>();
         builder.Services.AddTransient<NewPage1>();
         builder.Services.AddTransient<NewPage2>();
+        builder.Services.AddTransient<LayoutTest1>();
         builder.Services.AddTransient<NewPage1ViewModel>();
         builder.Services.AddTransient<NewPage2ViewModel>();
 

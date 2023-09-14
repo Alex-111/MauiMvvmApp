@@ -15,5 +15,9 @@
         Title="Page1"
         ContentTemplate="{DataTemplate views:NewPage1}"
         Route="NewPage1" />
-    
+    <ShellContent
+     Title="LayoutTest1"
+     ContentTemplate="{DataTemplate views:LayoutTest1}"
+     Route="LayoutTest1" />
+
 </Shell>
