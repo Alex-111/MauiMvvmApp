@@ -14,6 +14,6 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         
-        <Entry x:Name="myEntry" Text="abc" Loaded="myEntry_Loaded"></Entry>
+        <Entry x:Name="myEntry" Text="abc"></Entry>
     </VerticalStackLayout>
 </ContentPage>
