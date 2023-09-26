@@ -8,5 +8,12 @@
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        
+        <Entry x:Name="myEntry" Text="abc" Loaded="myEntry_Loaded"></Entry>
     </VerticalStackLayout>
 </ContentPage>
