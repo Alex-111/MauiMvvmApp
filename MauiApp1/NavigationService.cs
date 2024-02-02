@@ -22,29 +22,29 @@ namespace MauiApp1
         }
         public async Task NavigateAsync<T>(string path, T parameter = null, bool clearStack = false) where T : class
         {
-           
 
-                if (clearStack)
-                {
-                    var navigation = Shell.Current.Navigation;
-                    var pages = navigation.NavigationStack;
+
+            if (clearStack)
+            {
+                var navigation = Shell.Current.Navigation;
+                var pages = navigation.NavigationStack;
 
                 foreach (var item in pages.ToList())
                 {
-                    if (item!= null) navigation.RemovePage(item);
+                    if (item != null) navigation.RemovePage(item);
                 }
 
-                    //for (var i = pages.Count - 1; i >= 1; i--)
-                    //{
+                //for (var i = pages.Count - 1; i >= 1; i--)
+                //{
 
-                    //    navigation.RemovePage(pages[i]);
-                    //}
-                }
-                //App.Current.MainPage = shell;
+                //    navigation.RemovePage(pages[i]);
+                //}
+            }
+            //App.Current.MainPage = shell;
 
-                await Shell.Current.GoToAsync(path, new Dictionary<string, object>() { ["P"] = parameter });
+            await Shell.Current.GoToAsync(path, new Dictionary<string, object>() { ["P"] = parameter });
 
-           
+
 
         }
     }

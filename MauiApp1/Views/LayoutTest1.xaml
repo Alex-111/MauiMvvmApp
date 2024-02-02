@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:views="clr-namespace:MauiApp1.Views"
              x:Class="MauiApp1.Views.LayoutTest1"
              Title="LayoutTest1">
     <VerticalStackLayout>
@@ -16,4 +17,4 @@
         
         <Entry x:Name="myEntry" Text="abc"></Entry>
     </VerticalStackLayout>
-</ContentPage>
+</views:BaseView>

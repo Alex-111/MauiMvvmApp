@@ -22,15 +22,25 @@ public partial class BaseView   : ContentPage
 
     protected override   void OnAppearing()
     {
-        base.OnAppearing();
-        vm.RunOnAppearing( );
+       
+        try
+        {
+            vm.RunOnAppearing();
+            base.OnAppearing();
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+        
     }
 
 
     protected override   void OnDisappearing()
     {
-        
+        vm.RunOnDisappearing();
         base.OnDisappearing();
-          vm.RunOnDisappearing();
+          
     }
 }

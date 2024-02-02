@@ -52,6 +52,7 @@ namespace MauiApp1.ViewModels
         private NewPage2Parameter param;
         public override async Task OnAppearingAsync(NewPage2Parameter p, CancellationToken cancellationToken)
         {
+            await base.OnAppearingAsync(cancellationToken);
             param = p;
             //await navigationService.NavigateAsync("..");
         }

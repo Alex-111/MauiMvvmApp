@@ -23,7 +23,7 @@ namespace MauiApp1.ViewModels
 
         public async void RunOnDisappearing()
         {
-            cancellationTokenSource.Cancel();
+            this.cancellationTokenSource.Cancel();
             await OnDisappearingAsync();
         }
 

@@ -1,8 +1,10 @@
+using MauiApp1.ViewModels;
+
 namespace MauiApp1.Views;
 
-public partial class LayoutTest1 : ContentPage
+public partial class LayoutTest1: BaseView 
 {
-    public LayoutTest1()
+    public LayoutTest1(EmptyViewModel vm) : base(vm)
     {
         InitializeComponent();
 

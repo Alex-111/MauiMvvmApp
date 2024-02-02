@@ -31,6 +31,8 @@ public static class MauiProgram
         builder.Services.AddTransient<LayoutTest1>();
         builder.Services.AddTransient<NewPage1ViewModel>();
         builder.Services.AddTransient<NewPage2ViewModel>();
+        builder.Services.AddTransient<EmptyViewModel>();
+        builder.Services.AddTransient<MainPage>();
 
         builder.Services.AddSingleton<NavigationService>();
 
