@@ -13,12 +13,12 @@ namespace MauiApp1.ViewModels
         private T _parameter;
 
 
-        public override Task OnAppearingAsync(CancellationToken cancellationToken)
+        public sealed override Task OnAppearingAsync(CancellationToken cancellationToken)
         {
             return  OnAppearingAsync(_parameter, cancellationToken);
         }
 
-        public override Task OnPageLoadedAsync(CancellationToken cancellationToken)
+        public sealed override Task OnPageLoadedAsync(CancellationToken cancellationToken)
         {
             return OnPageLoadedAsync(_parameter, cancellationToken  );
 

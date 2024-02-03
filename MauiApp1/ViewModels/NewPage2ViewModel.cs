@@ -35,14 +35,16 @@ namespace MauiApp1.ViewModels
                                     new AsyncRelayCommand(async () =>
                                     {
                                         await navigationService.NavigateAsync("//" + nameof(MainPage));
-                                        //await Shell.Current.Navigation.PopToRootAsync();
+                                      
                                     });
 
         public ICommand OnButton3Click =>
                                   new AsyncRelayCommand(async () =>
                                   {
-                                      await navigationService.NavigateAsync("//" + nameof(MainPage), true);
                                       //await Shell.Current.Navigation.PopToRootAsync();
+                                      await navigationService.NavigateAsync("//" + nameof(MainPage), true);
+                                      //navigationService.ResetToHome();
+                                      
                                   });
 
 
@@ -52,14 +54,11 @@ namespace MauiApp1.ViewModels
         private NewPage2Parameter param;
         public override async Task OnAppearingAsync(NewPage2Parameter p, CancellationToken cancellationToken)
         {
-            await base.OnAppearingAsync(cancellationToken);
+            await base.OnAppearingAsync (p, cancellationToken);
             param = p;
             //await navigationService.NavigateAsync("..");
         }
 
-        public override async Task OnPageLoadedAsync(NewPage2Parameter p, CancellationToken cancellationToken   )
-        {
-
-        }
+       
     }
 }

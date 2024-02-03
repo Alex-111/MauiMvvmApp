@@ -8,15 +8,15 @@
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
-        Title="Home"
+        Title="Home" x:Name="MainPage"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
-        Title="Page1"
+        Title="Page1" x:Name="NewPage1"
         ContentTemplate="{DataTemplate views:NewPage1}"
         Route="NewPage1" />
     <ShellContent
-     Title="LayoutTest1"
+     Title="LayoutTest1" x:Name="LayoutTest1"
      ContentTemplate="{DataTemplate views:LayoutTest1}"
      Route="LayoutTest1" />
 

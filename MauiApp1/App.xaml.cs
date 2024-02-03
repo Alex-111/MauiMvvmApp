@@ -9,10 +9,11 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = shell;
-
-       
-
     }
+
+
+   
+
 
     private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
     {

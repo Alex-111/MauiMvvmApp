@@ -11,8 +11,11 @@ public partial class MainPage : BaseView
 	{
 		InitializeComponent();
 	}
-
-	private void OnCounterClicked(object sender, EventArgs e)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);	
+    }
+    private void OnCounterClicked(object sender, EventArgs e)
 	{
 
 		var stack = Navigation.NavigationStack;

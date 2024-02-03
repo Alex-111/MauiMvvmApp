@@ -34,18 +34,24 @@ namespace MauiApp1
                     if (item != null) navigation.RemovePage(item);
                 }
 
-                //for (var i = pages.Count - 1; i >= 1; i--)
-                //{
-
-                //    navigation.RemovePage(pages[i]);
-                //}
             }
             //App.Current.MainPage = shell;
-
             await Shell.Current.GoToAsync(path, new Dictionary<string, object>() { ["P"] = parameter });
+        }
 
+        public void ResetToHome()
+        {
+            var navigation = Shell.Current.Navigation;
+            var pages = navigation.NavigationStack;
 
+            foreach (var item in pages.ToList())
+            {
+                if (item != null) navigation.RemovePage(item);
+            }
 
+            var appShell = Shell.Current as AppShell;
+
+            appShell.SetMainPage();
         }
     }
 }
