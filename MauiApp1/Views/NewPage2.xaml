@@ -20,5 +20,8 @@
 
         <Button Text="HomeClearStack" Command="{Binding OnButton3Click}">
         </Button>
+
+        <Button Text="ModalPage3" Command="{Binding OnButton4Click}">
+        </Button>
     </VerticalStackLayout>
 </views:BaseView>

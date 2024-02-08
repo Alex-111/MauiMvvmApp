@@ -48,7 +48,14 @@ namespace MauiApp1.ViewModels
                                   });
 
 
-      
+        public ICommand OnButton4Click =>
+                                  new AsyncRelayCommand(async () =>
+                                  {
+                                      await Shell.Current.Navigation.PushModalAsync(new NewPage3(new EmptyViewModel()));
+                                      //await navigationService.NavigateAsync(nameof(NewPage3), false);
+                                      
+
+                                  });
 
 
         private NewPage2Parameter param;

@@ -28,6 +28,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<AppShell>();
         builder.Services.AddTransient<NewPage1>();
         builder.Services.AddTransient<NewPage2>();
+        builder.Services.AddTransient<NewPage3>();
         builder.Services.AddTransient<LayoutTest1>();
         builder.Services.AddTransient<NewPage1ViewModel>();
         builder.Services.AddTransient<NewPage2ViewModel>();
@@ -36,8 +37,10 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<NavigationService>();
 
-        Routing.RegisterRoute(nameof(NewPage2), typeof(NewPage2));	
+        Routing.RegisterRoute(nameof(NewPage2), typeof(NewPage2));
+        Routing.RegisterRoute(nameof(NewPage3), typeof(NewPage3));
 
         return builder.Build();
 	}
 }
+

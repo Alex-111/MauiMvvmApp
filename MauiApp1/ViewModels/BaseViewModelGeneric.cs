@@ -37,7 +37,7 @@ namespace MauiApp1.ViewModels
         }
         public virtual async Task OnAppearingAsync(T parameter, CancellationToken cancellationToken)
         {
-
+            await base.OnAppearingAsync(cancellationToken);
         }
 
         

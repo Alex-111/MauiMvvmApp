@@ -16,6 +16,9 @@ namespace MauiApp1
             this.shell = shell;
         }
 
+
+        
+
         public Task NavigateAsync(string path, bool clearStack = false)
         {
             return NavigateAsync<ViewModelParameterBase>(path, null, clearStack);
