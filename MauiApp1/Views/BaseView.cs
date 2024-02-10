@@ -12,7 +12,13 @@ public partial class BaseView   : ContentPage
         this.BindingContext = vm;
         //InitializeComponent();
         this.Loaded += BaseView_Loaded;
+        this.Unloaded += BaseView_Unloaded;
         this.vm = vm;
+    }
+
+    private void BaseView_Unloaded(object sender, EventArgs e)
+    {
+        vm.RunOnPageUnLoaded(); 
     }
 
     private void BaseView_Loaded(object sender, EventArgs e)

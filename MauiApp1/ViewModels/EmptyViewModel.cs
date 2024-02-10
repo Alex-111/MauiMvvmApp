@@ -12,10 +12,13 @@ using System.Windows.Input;
 
 namespace MauiApp1.ViewModels
 {
-    public class EmptyViewModel : BaseViewModel
+    public partial class EmptyViewModel : BaseViewModel
     {
-        
-        
- 
+
+
+        public EmptyViewModel()
+        {
+                
+        }
     }
 }
