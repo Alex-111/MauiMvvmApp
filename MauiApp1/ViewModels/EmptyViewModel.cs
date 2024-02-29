@@ -16,7 +16,7 @@ namespace MauiApp1.ViewModels
     {
 
 
-        public EmptyViewModel()
+        public EmptyViewModel(NavigationService navigationService) : base(navigationService) 
         {
                 
         }

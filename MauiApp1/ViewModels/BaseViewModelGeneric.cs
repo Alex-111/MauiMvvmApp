@@ -12,6 +12,10 @@ namespace MauiApp1.ViewModels
 
         private T? _parameter;
 
+        protected BaseViewModel(NavigationService navigationService) : base(navigationService)
+        {
+                
+        }
 
         public sealed override Task OnAppearingAsync(CancellationToken cancellationToken)
         {
@@ -34,7 +38,7 @@ namespace MauiApp1.ViewModels
 
         
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public void ApplyQueryAttributes(IDictionary<string, object?> query)
         {
             _parameter = query?.Values?.FirstOrDefault() as T;
         }

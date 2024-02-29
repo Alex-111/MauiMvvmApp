@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
-    public abstract class BaseViewModel : ObservableRecipient
+    public abstract class BaseViewModel : ObservableRecipient, IRecipient<OperatingSystemEvent>
     {
         private CancellationTokenSource? _cancellationTokenSource;
-
-        public BaseViewModel() : base()
+        protected readonly NavigationService NavigationService;
+        public BaseViewModel(NavigationService navigationService) : base()
         {
+            NavigationService = navigationService;
         }
 
         public async Task RunOnPageLoaded()
@@ -48,18 +49,10 @@ namespace MauiApp1.ViewModels
             }
         }
 
-        public async Task RunOnSleep()
-        {
-            await OnSleepAsync(_cancellationTokenSource?.Token ?? default);
-        }
 
-        public async Task RunOnResume()
-        {
-            await OnResumeAsync(_cancellationTokenSource?.Token ?? default);
-        }
 
         public virtual Task OnSleepAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-        
+
         public virtual Task OnResumeAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
         public virtual Task OnPageLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
@@ -69,6 +62,34 @@ namespace MauiApp1.ViewModels
         public virtual Task OnAppearingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
         public virtual Task OnDisappearingAsync() => Task.CompletedTask;
+
+
+
+
+        public async void Receive(OperatingSystemEvent message)
+        {
+
+            try
+            {
+                switch (message.Value)
+                {
+                    case OperatingSystemEventType.OnSleep:
+                        await OnSleepAsync(_cancellationTokenSource?.Token ?? default);
+                        break;
+                    case OperatingSystemEventType.OnResume:
+                        await OnResumeAsync(_cancellationTokenSource?.Token ?? default);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                await NavigationService.ShowAlert(ex);
+
+            }
+
+        }
 
     }
 }

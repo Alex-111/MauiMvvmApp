@@ -14,11 +14,11 @@ namespace MauiApp1.ViewModels
 {
     public class NewPage1ViewModel : BaseViewModel
     {
-        private readonly NavigationService _navigationService;
+        
 
-        public NewPage1ViewModel(NavigationService navigation)
+        public NewPage1ViewModel(NavigationService navigationService) : base(navigationService)
         {
-            this._navigationService = navigation;
+            
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
             OnButtonClick.PropertyChanged += (s, e) =>
@@ -57,7 +57,7 @@ namespace MauiApp1.ViewModels
 
                 
                 //throw new Exception();
-                await _navigationService.NavigateAsync(nameof(NewPage2));
+                await NavigationService.NavigateAsync(nameof(NewPage2));
             });
 
     }

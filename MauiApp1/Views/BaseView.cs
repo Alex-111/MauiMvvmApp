@@ -4,7 +4,8 @@ using MauiApp1.ViewModels;
 
 namespace MauiApp1.Views;
 
-public partial class BaseView   : ContentPage , IRecipient<OperatingSystemEvent>
+[XamlCompilation(XamlCompilationOptions.Compile)]
+public partial class BaseView   : ContentPage 
 {
     private readonly BaseViewModel  vm;
 
@@ -17,7 +18,7 @@ public partial class BaseView   : ContentPage , IRecipient<OperatingSystemEvent>
         this.vm = vm;
     }
 
-    private async void BaseView_Unloaded(object sender, EventArgs e)
+    private async void BaseView_Unloaded(object? sender, EventArgs e)
     {
         try
         {
@@ -30,7 +31,7 @@ public partial class BaseView   : ContentPage , IRecipient<OperatingSystemEvent>
         }
     }
 
-    private async void BaseView_Loaded(object sender, EventArgs e)
+    private async void BaseView_Loaded(object? sender, EventArgs e)
     {
         try
         {
@@ -73,46 +74,5 @@ public partial class BaseView   : ContentPage , IRecipient<OperatingSystemEvent>
         }
     }
 
-    protected async void OnSleep()
-    {
-        try
-        {
-            await vm.RunOnSleep();
-            
-        }
-        catch (Exception ex)
-        {
-
-            await DisplayAlert("Error", ex.ToString(), "OK");
-        }
-    }
-
-    protected async void OnResume()
-    {
-        try
-        {
-            await vm.RunOnResume();
-            
-        }
-        catch (Exception ex)
-        {
-
-            await DisplayAlert("Error", ex.ToString(), "OK");
-        }
-    }
-
-    public void Receive(OperatingSystemEvent message)
-    {
-        switch (message.Value)
-        {
-            case OperatingSystemEventType.OnSleep:
-                OnSleep();
-                break;
-            case OperatingSystemEventType.OnResume:
-                OnResume();
-                break;
-            default:
-                break;
-        }
-    }
+   
 }

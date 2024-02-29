@@ -30,9 +30,9 @@ public partial class AppShell : Shell
         //}
         base.OnNavigating(args);
     }
-    public void SetMainPage()
-    {
+    //public void SetMainPage()
+    //{
 
-        CurrentItem = MainPage;
-    }
+    //    CurrentItem = MainPage;
+    //}
 }

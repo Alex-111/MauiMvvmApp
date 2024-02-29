@@ -5,33 +5,34 @@ using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MauiApp1.ViewModels
 {
-    public class NewPage2ViewModel : BaseViewModel<NewPage2Parameter>
+    public partial class NewPage2ViewModel : BaseViewModel<NewPage2Parameter>
     {
-        private readonly NavigationService navigationService;
+      
 
-        public NewPage2ViewModel(NavigationService navigationService)
+        public NewPage2ViewModel(NavigationService navigationService) : base(navigationService)
         {
-            this.navigationService = navigationService;
+            
         }
         public ICommand OnButtonClick =>
                                       new AsyncRelayCommand(async () =>
                                       {
                                           param = param ?? new NewPage2Parameter();
                                           param.Count++;
-                                          await navigationService.NavigateAsync(nameof(NewPage2), param);
+                                          await NavigationService.NavigateAsync(nameof(NewPage2), param);
                                       });
 
 
         public ICommand OnButton2Click =>
                                     new AsyncRelayCommand(async () =>
                                     {
-                                        await navigationService.NavigateAsync("//" + nameof(MainPage));
+                                        await NavigationService.NavigateAsync("//" + nameof(MainPage));
                                       
                                     });
 
@@ -39,21 +40,25 @@ namespace MauiApp1.ViewModels
                                   new AsyncRelayCommand(async () =>
                                   {
                                       //await Shell.Current.Navigation.PopToRootAsync();
-                                      await navigationService.NavigateAsync("//" + nameof(MainPage), true);
+                                      NavigationService.ClearStack();
+                                      await NavigationService.NavigateAsync("//" + nameof(MainPage));
+                                     
+
                                       //navigationService.ResetToHome();
                                       
                                   });
 
-
-        public ICommand OnButton4Click =>
-                                  new AsyncRelayCommand(async () =>
-                                  {
-                                      await Shell.Current.Navigation.PushModalAsync(new NewPage3(new EmptyViewModel()));
-                                      //await navigationService.NavigateAsync(nameof(NewPage3), false);
-                                      
-
-                                  });
-
+ 
+        [RelayCommand]
+        private async Task  Button4Async()
+        {
+            await Shell.Current.Navigation.PushModalAsync(new NewPage3(new EmptyViewModel(NavigationService)));
+        }
+        [RelayCommand]
+        private void ClearStack()
+        {
+            NavigationService.ClearStack();
+        }
 
         private NewPage2Parameter? param;
         public override async Task OnAppearingAsync(NewPage2Parameter? p, CancellationToken cancellationToken)
