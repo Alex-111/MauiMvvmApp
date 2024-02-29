@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
-    public class BaseViewModel<T> : BaseViewModel, IQueryAttributable where T : class
+    public abstract class BaseViewModel<T> : BaseViewModel, IQueryAttributable where T : class
     {
 
-        private T _parameter;
+        private T? _parameter;
 
 
         public sealed override Task OnAppearingAsync(CancellationToken cancellationToken)
@@ -25,14 +25,9 @@ namespace MauiApp1.ViewModels
 
         }
 
-     
-
-
-        public virtual async Task OnPageLoadedAsync(T parameter, CancellationToken cancellationToken)
-        {
-
-        }
-        public virtual async Task OnAppearingAsync(T parameter, CancellationToken cancellationToken)
+        public virtual Task OnPageLoadedAsync(T? parameter, CancellationToken cancellationToken) => Task.CompletedTask;
+         
+        public virtual async Task OnAppearingAsync(T? parameter, CancellationToken cancellationToken)
         {
             await base.OnAppearingAsync(cancellationToken);
         }

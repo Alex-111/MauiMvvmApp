@@ -23,9 +23,8 @@ namespace MauiApp1.ViewModels
 
             OnButtonClick.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(AsyncRelayCommand.ExecutionTask) &&
-                    ((AsyncRelayCommand)s).ExecutionTask is Task task &&
-                    task.Exception is AggregateException exception)
+                if (e.PropertyName == nameof(AsyncRelayCommand.ExecutionTask) && s is AsyncRelayCommand rc &&
+                    rc.ExecutionTask?.Exception is AggregateException exception)
                 {
                     // Log your exception here
                 }
@@ -35,13 +34,22 @@ namespace MauiApp1.ViewModels
 
         
 
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
             Debug.WriteLine(e.Exception.ToString()); 
         }
 
 
-        
+        public override Task OnAppearingAsync(CancellationToken cancellationToken)
+        {
+            return base.OnAppearingAsync(cancellationToken);
+        }
+
+        public override Task OnDisappearingAsync()
+        {
+            return base.OnDisappearingAsync();
+        }
+
 
         public AsyncRelayCommand OnButtonClick   => 
             new AsyncRelayCommand(async (cancel) =>

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
-    public class BaseViewModel : ObservableRecipient
+    public abstract class BaseViewModel : ObservableRecipient
     {
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource? _cancellationTokenSource;
 
         public BaseViewModel() : base()
         {
@@ -38,7 +38,7 @@ namespace MauiApp1.ViewModels
         {
             try
             {
-                this._cancellationTokenSource.Cancel();
+                this._cancellationTokenSource?.Cancel();
                 await OnDisappearingAsync();
             }
             finally
@@ -53,35 +53,22 @@ namespace MauiApp1.ViewModels
             await OnSleepAsync(_cancellationTokenSource?.Token ?? default);
         }
 
-        public virtual async Task OnSleepAsync(CancellationToken cancellationToken)
-        {
-        }
-
         public async Task RunOnResume()
         {
             await OnResumeAsync(_cancellationTokenSource?.Token ?? default);
         }
 
-        public virtual async Task OnResumeAsync(CancellationToken cancellationToken)
-        {
-        }
+        public virtual Task OnSleepAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+        
+        public virtual Task OnResumeAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-        public virtual async Task OnPageLoadedAsync(CancellationToken cancellationToken)
-        {
-        }
+        public virtual Task OnPageLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-        public virtual async Task OnPageUnLoadedAsync(CancellationToken cancellationToken)
-        {
-        }
+        public virtual Task OnPageUnLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-        public virtual async Task OnAppearingAsync(CancellationToken cancellationToken)
-        {
-            Debug.WriteLine("OnAppearing: " + this.ToString());
-        }
+        public virtual Task OnAppearingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
-        public virtual async Task OnDisappearingAsync()
-        {
-            Debug.WriteLine("OnDisappearing: " + this.ToString());
-        }
+        public virtual Task OnDisappearingAsync() => Task.CompletedTask;
+
     }
 }

@@ -18,9 +18,6 @@ namespace MauiApp1.ViewModels
         public NewPage2ViewModel(NavigationService navigationService)
         {
             this.navigationService = navigationService;
-
-           
-
         }
         public ICommand OnButtonClick =>
                                       new AsyncRelayCommand(async () =>
@@ -58,8 +55,8 @@ namespace MauiApp1.ViewModels
                                   });
 
 
-        private NewPage2Parameter param;
-        public override async Task OnAppearingAsync(NewPage2Parameter p, CancellationToken cancellationToken)
+        private NewPage2Parameter? param;
+        public override async Task OnAppearingAsync(NewPage2Parameter? p, CancellationToken cancellationToken)
         {
             await base.OnAppearingAsync (p, cancellationToken);
             param = p;
