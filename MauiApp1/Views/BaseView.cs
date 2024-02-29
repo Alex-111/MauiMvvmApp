@@ -1,11 +1,12 @@
-﻿using MauiApp1.ViewModels;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using MauiApp1.Message;
+using MauiApp1.ViewModels;
 
 namespace MauiApp1.Views;
 
-public partial class BaseView   : ContentPage  
+public partial class BaseView   : ContentPage , IRecipient<OperatingSystemEvent>
 {
     private readonly BaseViewModel  vm;
-   
 
     public BaseView(BaseViewModel vm)
     {
@@ -16,37 +17,102 @@ public partial class BaseView   : ContentPage
         this.vm = vm;
     }
 
-    private void BaseView_Unloaded(object sender, EventArgs e)
+    private async void BaseView_Unloaded(object sender, EventArgs e)
     {
-        vm.RunOnPageUnLoaded(); 
+        try
+        {
+            await vm.RunOnPageUnLoaded();
+        }
+        catch (Exception ex)
+        {
+
+            await DisplayAlert("Error", ex.ToString(), "OK");
+        }
     }
 
-    private void BaseView_Loaded(object sender, EventArgs e)
+    private async void BaseView_Loaded(object sender, EventArgs e)
     {
-        vm.RunOnPageLoaded();
+        try
+        {
+            await vm.RunOnPageLoaded();
+        }
+        catch (Exception ex)
+        {
+
+            await DisplayAlert("Error", ex.ToString(), "OK");
+        }
     }
 
-    protected override   void OnAppearing()
+    protected override async void OnAppearing()
     {
        
         try
         {
-            vm.RunOnAppearing();
+            await vm.RunOnAppearing();
             base.OnAppearing();
         }
         catch (Exception ex)
         {
 
-            throw;
+            await DisplayAlert("Error", ex.ToString(), "OK");
         }
-        
     }
 
 
-    protected override   void OnDisappearing()
+    protected override async  void OnDisappearing()
     {
-        vm.RunOnDisappearing();
-        base.OnDisappearing();
-          
+        try
+        {
+            await vm.RunOnDisappearing();
+            base.OnDisappearing();
+        }
+        catch (Exception ex)
+        {
+
+            await DisplayAlert("Error", ex.ToString(), "OK");
+        }
+    }
+
+    protected async void OnSleep()
+    {
+        try
+        {
+            await vm.RunOnSleep();
+            
+        }
+        catch (Exception ex)
+        {
+
+            await DisplayAlert("Error", ex.ToString(), "OK");
+        }
+    }
+
+    protected async void OnResume()
+    {
+        try
+        {
+            await vm.RunOnResume();
+            
+        }
+        catch (Exception ex)
+        {
+
+            await DisplayAlert("Error", ex.ToString(), "OK");
+        }
+    }
+
+    public void Receive(OperatingSystemEvent message)
+    {
+        switch (message.Value)
+        {
+            case OperatingSystemEventType.OnSleep:
+                OnSleep();
+                break;
+            case OperatingSystemEventType.OnResume:
+                OnResume();
+                break;
+            default:
+                break;
+        }
     }
 }

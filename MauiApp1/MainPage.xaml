@@ -36,6 +36,8 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
+            <Editor></Editor>
+
         </VerticalStackLayout>
     </ScrollView>
 

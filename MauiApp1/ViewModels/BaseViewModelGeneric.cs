@@ -25,10 +25,7 @@ namespace MauiApp1.ViewModels
 
         }
 
-        //public override Task OnDisappearingAsync()
-        //{
-        //    return OnDisappearingAsync();
-        //}
+     
 
 
         public virtual async Task OnPageLoadedAsync(T parameter, CancellationToken cancellationToken)

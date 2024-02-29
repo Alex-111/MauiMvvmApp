@@ -11,31 +11,30 @@ using System.Threading.Tasks;
 
 namespace MauiApp1.ViewModels
 {
-    public   class BaseViewModel  : ObservableRecipient, IRecipient<OperatingSystemEvent>
+    public class BaseViewModel : ObservableRecipient
     {
-        private CancellationTokenSource _cancellationTokenSource ;
+        private CancellationTokenSource _cancellationTokenSource;
 
-        public BaseViewModel() : base() 
+        public BaseViewModel() : base()
         {
-           
         }
 
-        public async void RunOnPageLoaded()
+        public async Task RunOnPageLoaded()
         {
             await OnPageLoadedAsync(_cancellationTokenSource?.Token ?? new CancellationToken());
         }
-        public async void RunOnPageUnLoaded()
+        public async Task RunOnPageUnLoaded()
         {
             await OnPageUnLoadedAsync(_cancellationTokenSource?.Token ?? new CancellationToken());
         }
-        public async void RunOnAppearing()
+        public async Task RunOnAppearing()
         {
             IsActive = true;
             _cancellationTokenSource = new CancellationTokenSource();
             await OnAppearingAsync(_cancellationTokenSource.Token);
         }
 
-        public async void RunOnDisappearing()
+        public async Task RunOnDisappearing()
         {
             try
             {
@@ -45,32 +44,37 @@ namespace MauiApp1.ViewModels
             finally
             {
                 IsActive = false;
-                
+
             }
-          
         }
 
-        public virtual void OnSleep()
+        public async Task RunOnSleep()
         {
-
+            await OnSleepAsync(_cancellationTokenSource?.Token ?? default);
         }
 
-        public virtual void OnResume()
+        public virtual async Task OnSleepAsync(CancellationToken cancellationToken)
         {
-
         }
 
-        public virtual async Task OnPageLoadedAsync(CancellationToken cancellationToken  )
+        public async Task RunOnResume()
         {
+            await OnResumeAsync(_cancellationTokenSource?.Token ?? default);
+        }
 
+        public virtual async Task OnResumeAsync(CancellationToken cancellationToken)
+        {
+        }
+
+        public virtual async Task OnPageLoadedAsync(CancellationToken cancellationToken)
+        {
         }
 
         public virtual async Task OnPageUnLoadedAsync(CancellationToken cancellationToken)
         {
-
         }
 
-        public virtual async Task OnAppearingAsync(CancellationToken cancellationToken  )
+        public virtual async Task OnAppearingAsync(CancellationToken cancellationToken)
         {
             Debug.WriteLine("OnAppearing: " + this.ToString());
         }
@@ -78,25 +82,6 @@ namespace MauiApp1.ViewModels
         public virtual async Task OnDisappearingAsync()
         {
             Debug.WriteLine("OnDisappearing: " + this.ToString());
-        }
-
-        public async void Receive(OperatingSystemEvent message)
-        {
-            //Shell.Current.DisplayAlert("Message received", message.Value.ToString() , "OK" );
-
-            switch (message.Value)
-            {
-                case OperatingSystemEventType.OnSleep:
-                    OnSleep();
-                    break;
-                case OperatingSystemEventType.OnResume:
-                    OnResume();
-                    break;
-                default:
-                    break;
-            }
-
-            
         }
     }
 }

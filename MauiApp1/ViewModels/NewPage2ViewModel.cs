@@ -66,6 +66,7 @@ namespace MauiApp1.ViewModels
             //await navigationService.NavigateAsync("..");
         }
 
+        
        
     }
 }

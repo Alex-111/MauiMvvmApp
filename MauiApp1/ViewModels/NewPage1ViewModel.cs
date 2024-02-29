@@ -40,8 +40,8 @@ namespace MauiApp1.ViewModels
             Debug.WriteLine(e.Exception.ToString()); 
         }
 
-       
 
+        
 
         public AsyncRelayCommand OnButtonClick   => 
             new AsyncRelayCommand(async (cancel) =>
