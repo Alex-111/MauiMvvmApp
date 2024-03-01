@@ -7,23 +7,34 @@
     xmlns:views="clr-namespace:MauiApp1.Views"
     Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home" x:Name="MainPage"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-   
-    <ShellContent
-        Title="Page1" x:Name="NewPage1"
-        ContentTemplate="{DataTemplate views:NewPage1}"
-        Route="NewPage1" />
 
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
+
+        <ShellContent
+             Title="Home" x:Name="MainPage"
+             ContentTemplate="{DataTemplate local:MainPage}"
+             Route="MainPage" />
+
+        <ShellContent
+             Title="Page1" x:Name="NewPage1"
+             ContentTemplate="{DataTemplate views:NewPage1}"
+             Route="NewPage1" />
+
+    </FlyoutItem>
+
+    
+
+    <!--<MenuFlyoutSeparator>
+
+    </MenuFlyoutSeparator>
     <MenuItem IsEnabled="False">
         <Shell.MenuItemTemplate>
             <DataTemplate>
                 <Label HeightRequest="1" BackgroundColor="LightGray"></Label>
             </DataTemplate>
         </Shell.MenuItemTemplate>
-    </MenuItem>
+    </MenuItem>-->
 
 
     <ShellContent

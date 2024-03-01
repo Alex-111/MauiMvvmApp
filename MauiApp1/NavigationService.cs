@@ -40,7 +40,7 @@ namespace MauiApp1
 
 
         /// <summary>
-        /// Unfortunately the OnAppearing runs for the root page
+        /// Unfortunately the OnAppearing runs for the root page after execuring this
         /// </summary>
         public void ClearStack()
         {
