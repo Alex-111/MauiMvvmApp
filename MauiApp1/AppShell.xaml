@@ -11,16 +11,22 @@
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
 
 
-        <ShellContent
-             Title="Home" x:Name="MainPage"
-             ContentTemplate="{DataTemplate local:MainPage}"
-             Route="MainPage" />
+        <Tab Title="Home">
+            <ShellContent  Shell.TabBarIsVisible="False" 
+     Title="Home" x:Name="MainPage"
+     ContentTemplate="{DataTemplate local:MainPage}"
+     Route="MainPage" />
 
-        <ShellContent
-             Title="Page1" x:Name="NewPage1"
-             ContentTemplate="{DataTemplate views:NewPage1}"
-             Route="NewPage1" />
-
+        </Tab>
+        <Tab Title="Page1"  >
+            <ShellContent  Shell.TabBarIsVisible="False" 
+      Title="Page1" x:Name="NewPage1"
+      ContentTemplate="{DataTemplate views:NewPage1}"
+      Route="NewPage1" />
+        </Tab>
+        
+       
+        
     </FlyoutItem>
 
     
