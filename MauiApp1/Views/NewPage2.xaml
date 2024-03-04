@@ -6,6 +6,8 @@
                xmlns:views="clr-namespace:MauiApp1.Views"
                 xmlns:vm="clr-namespace:MauiApp1.ViewModels"
              Title="NewPage2">
+
+  
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"

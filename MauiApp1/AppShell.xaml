@@ -7,6 +7,10 @@
     xmlns:views="clr-namespace:MauiApp1.Views"
     Shell.FlyoutBehavior="Flyout">
 
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="SItem1"></ToolbarItem>
+        <ToolbarItem Text="SItem2"></ToolbarItem>
+    </Shell.ToolbarItems>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
 
