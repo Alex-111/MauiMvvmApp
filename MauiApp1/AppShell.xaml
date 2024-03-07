@@ -8,8 +8,8 @@
     Shell.FlyoutBehavior="Flyout">
 
     <Shell.ToolbarItems>
-        <ToolbarItem Text="SItem1"></ToolbarItem>
-        <ToolbarItem Text="SItem2"></ToolbarItem>
+        <ToolbarItem Text="ShellItem1"></ToolbarItem>
+        <ToolbarItem Text="ShellItem2"></ToolbarItem>
     </Shell.ToolbarItems>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
