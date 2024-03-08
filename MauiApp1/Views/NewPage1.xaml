@@ -20,5 +20,6 @@
         <Button Text="Page2" Command="{Binding OnButtonClick}">
 
         </Button>
+        
     </VerticalStackLayout>
 </views:BaseView>
