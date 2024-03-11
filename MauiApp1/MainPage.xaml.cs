@@ -30,6 +30,8 @@ public partial class MainPage : BaseView
 		SemanticScreenReader.Announce(CounterBtn.Text);
 	}
 
+ 
+
     
 }
 
