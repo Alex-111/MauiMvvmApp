@@ -20,27 +20,30 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }).ConfigureLifecycleEvents(lifecycle =>
-            {
-#if ANDROID
-                lifecycle.AddAndroid(android =>
-                {
-                    android.OnCreate((activity, bundle) =>
-                    {
-                        var action = activity.Intent?.Action;
-                        var data = activity.Intent?.Data?.ToString();
+            })
+            
+//            .ConfigureLifecycleEvents(lifecycle =>
+//            {
+//#if ANDROID
+//                lifecycle.AddAndroid(android =>
+//                {
+//                    android.OnCreate((activity, bundle) =>
+//                    {
+//                        var action = activity.Intent?.Action;
+//                        var data = activity.Intent?.Data?.ToString();
                         
-                        if (action == Android.Content.Intent.ActionView && data is not null/* && activity is MainActivity main*/)
-                        {
+//                        if (action == Android.Content.Intent.ActionView && data is not null/* && activity is MainActivity main*/)
+//                        {
                              
-                            activity.Finish();
-                            Task.Run(() => HandleAppLink(data));
-                        }
+//                            activity.Finish();
+//                            Task.Run(() => HandleAppLink(data));
+//                        }
 
-                    });
-                });
-#endif
-            });
+//                    });
+//                });
+//#endif
+//            })
+            ;
 
 
 #if DEBUG

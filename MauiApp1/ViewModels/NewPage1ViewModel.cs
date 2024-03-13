@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MauiApp1.ViewModels
 {
@@ -42,7 +43,13 @@ namespace MauiApp1.ViewModels
 
         public override Task OnAppearingAsync(CancellationToken cancellationToken)
         {
+
+          
+
             return base.OnAppearingAsync(cancellationToken);
+
+           
+
         }
 
         public override Task OnDisappearingAsync()
