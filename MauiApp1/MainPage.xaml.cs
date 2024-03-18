@@ -8,7 +8,7 @@ public partial class MainPage : BaseView
 {
 	int count = 0;
 
-	public MainPage(EmptyViewModel vm) : base(vm)
+	public MainPage(MainPageViewModel vm) : base(vm)
 	{
 		InitializeComponent();
 	}
