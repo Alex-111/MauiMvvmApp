@@ -9,8 +9,4 @@ public partial class NewPage1 : BaseView
 		InitializeComponent();
 	}
 
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-    }
 }
