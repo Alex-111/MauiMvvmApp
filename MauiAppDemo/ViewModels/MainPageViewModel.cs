@@ -18,6 +18,9 @@ namespace MauiAppDemo.ViewModels
     {
         CancellationToken _cancellationToken = default;
 
+        //[ObservableProperty]
+        //public partial string MyProperty { get; set; }
+
         [RelayCommand]
         private async Task Button2Press()
         {
