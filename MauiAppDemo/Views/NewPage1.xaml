@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppDemo.Views.NewPage1"
+             x:DataType="vm:NewPage1ViewModel"
+             xmlns:vm="clr-namespace:MauiAppDemo.ViewModels"
+             xmlns:views="clr-namespace:MauiAppDemo.Views"
+             Title="NewPage1">
+
+    <views:BaseView.ToolbarItems>
+        <ToolbarItem Text="Item1"></ToolbarItem>
+        <ToolbarItem Text="Item2"></ToolbarItem>
+    </views:BaseView.ToolbarItems>
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Button Text="Page2" Command="{Binding OnButtonClick}">
+
+        </Button>
+
+    </VerticalStackLayout>
+</views:BaseView>

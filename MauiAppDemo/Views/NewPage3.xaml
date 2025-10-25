@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppDemo.Views.NewPage3"
+                 
+               xmlns:views="clr-namespace:MauiAppDemo.Views"
+                xmlns:vm="clr-namespace:MauiAppDemo.ViewModels"
+             Title="Page3">
+    <VerticalStackLayout>
+        <Label 
+            Text="Page3"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+         
+    </VerticalStackLayout>
+</views:BaseView>

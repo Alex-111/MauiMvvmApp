@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiAppDemo.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiAppDemo"
+    xmlns:views="clr-namespace:MauiAppDemo.Views"
+    Shell.FlyoutBehavior="Flyout">
+
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="ShellItem1"></ToolbarItem>
+        <ToolbarItem Text="ShellItem2"></ToolbarItem>
+    </Shell.ToolbarItems>
+
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
+
+        <Tab Title="Home">
+            <ShellContent  Shell.TabBarIsVisible="False" 
+     Title="Home" x:Name="MainPage"
+     ContentTemplate="{DataTemplate local:MainPage}"
+     Route="MainPage" />
+
+        </Tab>
+        <Tab Title="Page1"  >
+            <ShellContent  Shell.TabBarIsVisible="False" 
+      Title="Page1" x:Name="NewPage1"
+      ContentTemplate="{DataTemplate views:NewPage1}"
+      Route="NewPage1" />
+        </Tab>
+        
+       
+        
+    </FlyoutItem>
+
+    
+
+    <!--<MenuFlyoutSeparator>
+
+    </MenuFlyoutSeparator>
+    <MenuItem IsEnabled="False">
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <Label HeightRequest="1" BackgroundColor="LightGray"></Label>
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>-->
+
+
+    <ShellContent
+     Title="LayoutTest1" x:Name="LayoutTest1"
+     ContentTemplate="{DataTemplate views:LayoutTest1}"
+     Route="LayoutTest1" />
+
+</Shell>
