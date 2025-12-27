@@ -20,7 +20,7 @@ namespace MauiAppDemo
 
         public async Task ShowAlert(Exception ex)
         {
-            await shell.DisplayAlert("Error", ex.ToString(), "OK");
+            await shell.DisplayAlertAsync("Error", ex.ToString(), "OK");
         }
 
 

@@ -27,7 +27,7 @@ public partial class BaseView   : ContentPage
         catch (Exception ex)
         {
 
-            await DisplayAlert("Error", ex.ToString(), "OK");
+            await DisplayAlertAsync("Error", ex.ToString(), "OK");
         }
     }
 
@@ -40,7 +40,7 @@ public partial class BaseView   : ContentPage
         catch (Exception ex)
         {
 
-            await DisplayAlert("Error", ex.ToString(), "OK");
+            await DisplayAlertAsync("Error", ex.ToString(), "OK");
         }
     }
 
@@ -55,7 +55,7 @@ public partial class BaseView   : ContentPage
         catch (Exception ex)
         {
 
-            await DisplayAlert("Error", ex.ToString(), "OK");
+            await DisplayAlertAsync("Error", ex.ToString(), "OK");
         }
     }
 
@@ -70,7 +70,7 @@ public partial class BaseView   : ContentPage
         catch (Exception ex)
         {
 
-            await DisplayAlert("Error", ex.ToString(), "OK");
+            await DisplayAlertAsync("Error", ex.ToString(), "OK");
         }
     }
 
