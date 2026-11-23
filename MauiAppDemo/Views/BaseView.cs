@@ -1,78 +1,51 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using MauiAppDemo.Message;
 using MauiAppDemo.ViewModels;
 
 namespace MauiAppDemo.Views;
 
-[XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class BaseView   : ContentPage 
+public partial class BaseView : ContentPage
 {
-    private readonly BaseViewModel  vm;
+    private readonly BaseViewModel vm;
 
     public BaseView(BaseViewModel vm)
     {
-        this.BindingContext = vm;
-        //InitializeComponent();
-        this.Loaded += BaseView_Loaded;
-        this.Unloaded += BaseView_Unloaded;
-        this.vm = vm;
+        BindingContext = this.vm = vm;
+        Loaded += BaseView_Loaded;
+        Unloaded += BaseView_Unloaded;
     }
 
-    private async void BaseView_Unloaded(object? sender, EventArgs e)
-    {
-        try
-        {
-            await vm.RunOnPageUnLoaded();
-        }
-        catch (Exception ex)
-        {
+    private async void BaseView_Unloaded(object? sender, EventArgs e) =>
+        await RunSafeAsync(vm.RunOnPageUnLoaded);
 
-            await DisplayAlertAsync("Error", ex.ToString(), "OK");
-        }
-    }
-
-    private async void BaseView_Loaded(object? sender, EventArgs e)
-    {
-        try
-        {
-            await vm.RunOnPageLoaded();
-        }
-        catch (Exception ex)
-        {
-
-            await DisplayAlertAsync("Error", ex.ToString(), "OK");
-        }
-    }
+    private async void BaseView_Loaded(object? sender, EventArgs e) =>
+        await RunSafeAsync(vm.RunOnPageLoaded);
 
     protected override async void OnAppearing()
     {
-       
-        try
+        await RunSafeAsync(async () =>
         {
             await vm.RunOnAppearing();
             base.OnAppearing();
-        }
-        catch (Exception ex)
-        {
-
-            await DisplayAlertAsync("Error", ex.ToString(), "OK");
-        }
+        });
     }
 
-
-    protected override async  void OnDisappearing()
+    protected override async void OnDisappearing()
     {
-        try
+        await RunSafeAsync(async () =>
         {
             await vm.RunOnDisappearing();
             base.OnDisappearing();
+        });
+    }
+
+    private async Task RunSafeAsync(Func<Task> action)
+    {
+        try
+        {
+            await action();
         }
         catch (Exception ex)
         {
-
             await DisplayAlertAsync("Error", ex.ToString(), "OK");
         }
     }
-
-   
 }

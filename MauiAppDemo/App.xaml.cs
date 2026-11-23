@@ -1,33 +1,26 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using MauiAppDemo.Message;
-using Microsoft.Maui.Controls;
 using System.Diagnostics;
 
 namespace MauiAppDemo;
 
 public partial class App : Application
 {
+    private readonly AppShell shell;
+
     public App(AppShell shell)
     {
         InitializeComponent();
-        MainPage = shell;
+        this.shell = shell;
+        TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
     }
 
-    protected override async void OnAppLinkRequestReceived(Uri uri)
+    protected override Window CreateWindow(IActivationState? activationState) => new(shell);
+
+    protected override void OnAppLinkRequestReceived(Uri uri)
     {
         base.OnAppLinkRequestReceived(uri);
-
-        // Show an alert to test that the app link was received.
-        //await Dispatcher.DispatchAsync(async () =>
-        //{
-
-        // MainPage = MauiServiceProvider.GetService<NewPage1>();
-
-
-
-        //});
-
-        Console.WriteLine("App link: " + uri.ToString());
+        Debug.WriteLine($"App link: {uri}");
     }
 
     protected override void OnSleep()
@@ -36,15 +29,13 @@ public partial class App : Application
         base.OnSleep();
     }
 
-
     protected override void OnResume()
     {
         WeakReferenceMessenger.Default.Send(new OperatingSystemEvent(OperatingSystemEventType.OnResume));
         base.OnResume();
     }
 
-
-    private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
     {
         Debug.WriteLine(e.Exception.ToString());
     }

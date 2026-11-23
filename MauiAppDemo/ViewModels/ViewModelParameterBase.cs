@@ -1,12 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace MauiAppDemo.ViewModels;
 
-namespace MauiAppDemo.ViewModels
-{
-    public class ViewModelParameterBase
-    {
-    }
-}
+public class ViewModelParameterBase;

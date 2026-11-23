@@ -1,97 +1,43 @@
-﻿using MauiAppDemo.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using MauiAppDemo.ViewModels;
 
-namespace MauiAppDemo
+namespace MauiAppDemo;
+
+public class NavigationService(IServiceProvider services)
 {
-    public class NavigationService
+    private const string ParameterKey = "P";
+
+    private static Shell CurrentShell =>
+        Shell.Current ?? throw new InvalidOperationException("No active Shell is available for navigation.");
+
+    public Task ShowAlert(Exception ex) =>
+        CurrentShell.DisplayAlertAsync("Error", ex.ToString(), "OK");
+
+    public Task NavigateAsync(string path) =>
+        NavigateAsync<ViewModelParameterBase>(path, null);
+
+    public Task NavigateAsync<T>(string path, T? parameter = null) where T : class =>
+        CurrentShell.GoToAsync(path, new Dictionary<string, object?> { [ParameterKey] = parameter });
+
+    public Task PushModalAsync<TPage>() where TPage : Page =>
+        CurrentShell.Navigation.PushModalAsync(services.GetRequiredService<TPage>());
+
+    public Task PopModalAsync() =>
+        CurrentShell.Navigation.PopModalAsync();
+
+    public Task ResetToHome() =>
+        CurrentShell.Navigation.PopToRootAsync(true);
+
+    /// <summary>
+    /// Unfortunately the OnAppearing runs for the root page after executing this
+    /// </summary>
+    public void ClearStack()
     {
-        private readonly AppShell shell;
+        var navigation = CurrentShell.Navigation;
 
-        public NavigationService(AppShell shell)
+        foreach (var page in navigation.NavigationStack.ToList())
         {
-            this.shell = shell;
+            if (page is not null)
+                navigation.RemovePage(page);
         }
-
-
-        public async Task ShowAlert(Exception ex)
-        {
-            await shell.DisplayAlertAsync("Error", ex.ToString(), "OK");
-        }
-
-
-
-        public Task NavigateAsync(string path)
-        {
-            return NavigateAsync<ViewModelParameterBase>(path, null);
-        }
-        public async Task NavigateAsync<T>(string path, T? parameter = null) where T : class
-        {
-            await Shell.Current.GoToAsync(path, new Dictionary<string, object?>() { ["P"] = parameter } );
-        }
-        public Task ResetToHome()
-        {
-            return Shell.Current.Navigation.PopToRootAsync(true);
-        }
-
-
-        /// <summary>
-        /// Unfortunately the OnAppearing runs for the root page after execuring this
-        /// </summary>
-        public void ClearStack()
-        {
-            var navigation = Shell.Current.Navigation;
-            var pages = navigation.NavigationStack;
-
-            foreach (var item in pages.ToList())
-            {
-                if (item != null) navigation.RemovePage(item);
-            }
-        }
-
-
-
-        //public Task NavigateAsync(string path, bool clearStack = false)
-        //{
-        //    return NavigateAsync<ViewModelParameterBase>(path, null, clearStack);
-        //}
-        //public async Task NavigateAsync<T>(string path, T? parameter = null, bool clearStack = false) where T : class
-        //{
-
-
-        //    if (clearStack)
-        //    {
-        //        var navigation = Shell.Current.Navigation;
-        //        var pages = navigation.NavigationStack;
-
-        //        foreach (var item in pages.ToList())
-        //        {
-        //            if (item != null) navigation.RemovePage(item);
-        //        }
-
-        //    }
-        //    //App.Current.MainPage = shell;
-        //    await Shell.Current.GoToAsync(path, parameter != null ? new Dictionary<string, object>() { ["P"] = parameter } : null);
-        //}
-
-        //public void ResetToHome()
-        //{
-        //    var navigation = Shell.Current.Navigation;
-        //    var pages = navigation.NavigationStack;
-
-        //    foreach (var item in pages.ToList())
-        //    {
-        //        if (item != null) navigation.RemovePage(item);
-        //    }
-
-        //    if (Shell.Current is AppShell s)
-        //    {
-        //        s.SetMainPage();
-        //    }
-        //}
     }
 }

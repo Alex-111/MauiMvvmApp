@@ -1,22 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:BaseView  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                  xmlns:views="clr-namespace:MauiAppDemo.Views"
-                 xmlns:vm="clr-namespace:MauiAppDemo.ViewModels"
-                 x:DataType="vm:MainPageViewModel"
-             x:Class="MauiAppDemo.MainPage">
+<?xml version="1.0" encoding="utf-8" ?>
+<BaseView x:Class="MauiAppDemo.MainPage"
+          x:DataType="MainPageViewModel">
 
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
-       
+
             <Image
                 Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                SemanticProperties.Description="Cute dot net bot waving hi to you! Long-press for a surprise."
                 HeightRequest="200"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center">
+                <Image.GestureRecognizers>
+                    <LongPressGestureRecognizer MinimumPressDuration="500" Command="{Binding LongPressedCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
 
             <Label
                 Text="Hello, World!"
@@ -31,6 +31,15 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
 
+            <BoxView HeightRequest="4" CornerRadius="2">
+                <BoxView.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="{StaticResource Primary}" Offset="0.0" />
+                        <GradientStop Color="{StaticResource Secondary}" Offset="1.0" />
+                    </LinearGradientBrush>
+                </BoxView.Fill>
+            </BoxView>
+
             <Button
                 x:Name="CounterBtn"
                 Text="Click me"
@@ -38,11 +47,15 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
-            <Editor></Editor>
+            <Editor Text="{Binding Message}" Placeholder="Type a message" AutoSize="TextChanges" />
 
-            <Button Text="Button2" Command="{Binding Button2PressCommand}"></Button>
+            <Button Text="Show toast" Command="{Binding ShowToastCommand}" />
+
+            <Button Text="Show popup" Command="{Binding ShowPopupCommand}" />
+
+            <Button Text="Throw exception" Command="{Binding ThrowExceptionCommand}" />
 
         </VerticalStackLayout>
     </ScrollView>
 
-</views:BaseView>
+</BaseView>

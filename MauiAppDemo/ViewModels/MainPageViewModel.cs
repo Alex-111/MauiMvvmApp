@@ -1,46 +1,71 @@
-﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MauiAppDemo.Views;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace MauiAppDemo.ViewModels
+namespace MauiAppDemo.ViewModels;
+
+public partial class MainPageViewModel(NavigationService navigationService, IPopupService popupService)
+    : BaseViewModel(navigationService)
 {
-    public partial class MainPageViewModel : BaseViewModel
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ShowToastCommand))]
+    public partial string Message { get; set; } = "Hello from .NET 11!";
+
+    private bool CanShowToast => !string.IsNullOrWhiteSpace(Message);
+
+    [RelayCommand(CanExecute = nameof(CanShowToast))]
+    private Task ShowToastAsync() => ShowToast(Message);
+
+    [RelayCommand]
+    private Task LongPressedAsync() => ShowToast("You long-pressed the .NET bot");
+
+    [RelayCommand]
+    private async Task ShowPopupAsync()
     {
-        CancellationToken _cancellationToken = default;
+        // Popups are displayed as modal pages, which triggers OnDisappearing (and cancels PageCancellationToken)
+        // on this page, so the page token must not be used to wait for the popup result.
+        var result = await popupService.ShowPopupAsync<ConfirmPopupViewModel, bool>(
+            Shell.Current,
+            PopupOptions.Empty,
+            new Dictionary<string, object> { [nameof(ConfirmPopupViewModel.Message)] = Message });
 
-        //[ObservableProperty]
-        //public partial string MyProperty { get; set; }
+        var text = result.WasDismissedByTappingOutsideOfPopup
+            ? "Popup dismissed"
+            : $"Popup result: {(result.Result ? "Yes" : "No")}";
 
-        [RelayCommand]
-        private async Task Button2Press()
+        await ShowToast(text);
+    }
+
+    [RelayCommand]
+    private async Task ThrowExceptionAsync()
+    {
+        try
         {
-
-            IToast toast = Toast.Make("test", ToastDuration.Short, 20);
-            await toast.Show(_cancellationToken);
-
-            //var sb = Snackbar.Make("test");
-            //await sb.Show();
+            await FailingOperationAsync();
         }
-
-        public MainPageViewModel(NavigationService navigationService) : base(navigationService) 
+        catch (Exception ex)
         {
-                
+            await NavigationService.ShowAlert(ex);
         }
+    }
 
-        public override Task OnAppearingAsync(CancellationToken cancellationToken)
+    private static async Task FailingOperationAsync()
+    {
+        await Task.Delay(100);
+        throw new InvalidOperationException("Demo exception thrown from MainPageViewModel.");
+    }
+
+    private async Task ShowToast(string text)
+    {
+        try
         {
-            _cancellationToken = cancellationToken;
-            return base.OnAppearingAsync(cancellationToken);
+            await Toast.Make(text, ToastDuration.Short, 16).Show(PageCancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // Page disappeared before the toast was shown
         }
     }
 }

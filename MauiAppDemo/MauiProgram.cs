@@ -1,88 +1,41 @@
-﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using MauiAppDemo.ViewModels;
 using MauiAppDemo.Views;
-using MauiAppDemo;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
 
 namespace MauiAppDemo;
 
 public static class MauiProgram
 {
-   
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
+            // Toast/Snackbar must be opted in explicitly on Windows (CommunityToolkit.Maui 17+)
+            .UseMauiCommunityToolkit(options => options.SetShouldEnableSnackbarOnWindows(true))
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            })
-            
-//            .ConfigureLifecycleEvents(lifecycle =>
-//            {
-//#if ANDROID
-//                lifecycle.AddAndroid(android =>
-//                {
-//                    android.OnCreate((activity, bundle) =>
-//                    {
-//                        var action = activity.Intent?.Action;
-//                        var data = activity.Intent?.Data?.ToString();
-                        
-//                        if (action == Android.Content.Intent.ActionView && data is not null/* && activity is MainActivity main*/)
-//                        {
-                             
-//                            activity.Finish();
-//                            Task.Run(() => HandleAppLink(data));
-//                        }
-
-//                    });
-//                });
-//#endif
-//            })
-            ;
-
+            });
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
-
-
-        builder.Services.AddTransient<AppShell>();
-        builder.Services.AddTransient<MainPage>();
-        builder.Services.AddTransient<NewPage1>();
-        builder.Services.AddTransient<NewPage2>();
-        builder.Services.AddTransient<NewPage3>();
-        builder.Services.AddTransient<LayoutTest1>();
-
-        builder.Services.AddTransient<MainPageViewModel>();
-        builder.Services.AddTransient<NewPage1ViewModel>();
-        builder.Services.AddTransient<NewPage2ViewModel>();
-        builder.Services.AddTransient<EmptyViewModel>();
-        
-
+        builder.Services.AddSingleton<AppShell>();
         builder.Services.AddSingleton<NavigationService>();
 
-        Routing.RegisterRoute(nameof(NewPage2), typeof(NewPage2));
-        Routing.RegisterRoute(nameof(NewPage3), typeof(NewPage3));
+        // CommunityToolkit.Maui helpers register the page together with its view model (and Shell route)
+        builder.Services.AddTransient<MainPage, MainPageViewModel>();
+        builder.Services.AddTransient<NewPage1, NewPage1ViewModel>();
+        builder.Services.AddTransientWithShellRoute<NewPage2, NewPage2ViewModel>(nameof(NewPage2));
+        builder.Services.AddTransientWithShellRoute<NewPage3, EmptyViewModel>(nameof(NewPage3));
+        builder.Services.AddTransient<LayoutTest1>();
 
-        var app = builder.Build();
+        builder.Services.AddTransientPopup<ConfirmPopup, ConfirmPopupViewModel>();
 
-        MauiServiceProvider.Initialize(app.Services);
-
-        return app;
-
-        
-    }
-
-    static void HandleAppLink(string url)
-    {
-        if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out var uri))
-            App.Current?.SendOnAppLinkRequestReceived(uri);
+        return builder.Build();
     }
 }
-

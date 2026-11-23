@@ -1,0 +1,20 @@
+<toolkit:Popup x:Class="MauiAppDemo.Views.ConfirmPopup"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:TypeArguments="x:Boolean"
+               x:DataType="ConfirmPopupViewModel"
+               Padding="20">
+
+    <VerticalStackLayout Spacing="16">
+        <Label Text="CommunityToolkit Popup"
+               FontAttributes="Bold"
+               FontSize="18" />
+
+        <Label Text="{Binding Message}" />
+
+        <HorizontalStackLayout Spacing="12" HorizontalOptions="End">
+            <Button Text="No" Command="{Binding CancelCommand}" />
+            <Button Text="Yes" Command="{Binding ConfirmCommand}" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+
+</toolkit:Popup>

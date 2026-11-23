@@ -1,95 +1,79 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiAppDemo.Message;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace MauiAppDemo.ViewModels
+namespace MauiAppDemo.ViewModels;
+
+public abstract partial class BaseViewModel(NavigationService navigationService)
+    : ObservableRecipient, IRecipient<OperatingSystemEvent>
 {
-    public abstract class BaseViewModel : ObservableRecipient, IRecipient<OperatingSystemEvent>
+    private CancellationTokenSource? _cancellationTokenSource;
+
+    protected NavigationService NavigationService { get; } = navigationService;
+
+    /// <summary>
+    /// Token that is canceled as soon as the page disappears.
+    /// </summary>
+    protected CancellationToken PageCancellationToken => _cancellationTokenSource?.Token ?? CancellationToken.None;
+
+    [ObservableProperty]
+    public partial bool IsBusy { get; set; }
+
+    public Task RunOnPageLoaded() => OnPageLoadedAsync(PageCancellationToken);
+
+    public Task RunOnPageUnLoaded() => OnPageUnLoadedAsync(PageCancellationToken);
+
+    public async Task RunOnAppearing()
     {
-        private CancellationTokenSource? _cancellationTokenSource;
-        protected readonly NavigationService NavigationService;
-        public BaseViewModel(NavigationService navigationService) : base()
-        {
-            NavigationService = navigationService;
-        }
+        IsActive = true;
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new CancellationTokenSource();
+        await OnAppearingAsync(_cancellationTokenSource.Token);
+    }
 
-        public async Task RunOnPageLoaded()
+    public async Task RunOnDisappearing()
+    {
+        try
         {
-            await OnPageLoadedAsync(_cancellationTokenSource?.Token ?? new CancellationToken());
-        }
-        public async Task RunOnPageUnLoaded()
-        {
-            await OnPageUnLoadedAsync(_cancellationTokenSource?.Token ?? new CancellationToken());
-        }
-        public async Task RunOnAppearing()
-        {
-            IsActive = true;
-            _cancellationTokenSource = new CancellationTokenSource();
-            await OnAppearingAsync(_cancellationTokenSource.Token);
-        }
+            if (_cancellationTokenSource is not null)
+                await _cancellationTokenSource.CancelAsync();
 
-        public async Task RunOnDisappearing()
+            await OnDisappearingAsync();
+        }
+        finally
         {
-            try
+            IsActive = false;
+        }
+    }
+
+    public virtual Task OnSleepAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public virtual Task OnResumeAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public virtual Task OnPageLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public virtual Task OnPageUnLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public virtual Task OnAppearingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public virtual Task OnDisappearingAsync() => Task.CompletedTask;
+
+    public async void Receive(OperatingSystemEvent message)
+    {
+        try
+        {
+            var task = message.Value switch
             {
-                this._cancellationTokenSource?.Cancel();
-                await OnDisappearingAsync();
-            }
-            finally
-            {
-                IsActive = false;
+                OperatingSystemEventType.OnSleep => OnSleepAsync(PageCancellationToken),
+                OperatingSystemEventType.OnResume => OnResumeAsync(PageCancellationToken),
+                _ => Task.CompletedTask
+            };
 
-            }
+            await task;
         }
-
-
-
-        public virtual Task OnSleepAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-        public virtual Task OnResumeAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-        public virtual Task OnPageLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-        public virtual Task OnPageUnLoadedAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-        public virtual Task OnAppearingAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-        public virtual Task OnDisappearingAsync() => Task.CompletedTask;
-
-
-
-
-        public async void Receive(OperatingSystemEvent message)
+        catch (Exception ex)
         {
-
-            try
-            {
-                switch (message.Value)
-                {
-                    case OperatingSystemEventType.OnSleep:
-                        await OnSleepAsync(_cancellationTokenSource?.Token ?? default);
-                        break;
-                    case OperatingSystemEventType.OnResume:
-                        await OnResumeAsync(_cancellationTokenSource?.Token ?? default);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                await NavigationService.ShowAlert(ex);
-
-            }
-
+            await NavigationService.ShowAlert(ex);
         }
-
     }
 }

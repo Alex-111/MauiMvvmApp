@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+		<TargetFrameworks>net11.0-android;net11.0-ios</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net11.0-windows10.0.19041.0</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>MauiAppDemo</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -27,13 +25,13 @@
 		<WindowsPackageType>None</WindowsPackageType>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">17.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(TargetFramework)'=='net10.0-ios'">
+	<PropertyGroup Condition="'$(TargetFramework)'=='net11.0-ios'">
 	  <CodesignKey>Apple Development: Alexander Kerschl (RCNETP8ASG)</CodesignKey>
 	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
 	</PropertyGroup>
@@ -57,36 +55,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="11.0.10" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="17.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\NewPage3.xaml.cs">
-	    <DependentUpon>NewPage3.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Views\LayoutTest1.xaml">
+	  <MauiXaml Update="App.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\NewPage1.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\NewPage3.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\NewPage2.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.20" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.20" />
-
 	</ItemGroup>
 
 </Project>

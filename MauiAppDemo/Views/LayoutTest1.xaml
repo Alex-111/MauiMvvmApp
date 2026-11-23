@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:BaseView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:views="clr-namespace:MauiAppDemo.Views"
-             x:Class="MauiAppDemo.Views.LayoutTest1"
-             Title="LayoutTest1">
+<BaseView x:Class="MauiAppDemo.Views.LayoutTest1"
+          x:DataType="EmptyViewModel"
+          Title="LayoutTest1">
     <VerticalStackLayout>
-        <Label 
+        <Label
             Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
+            VerticalOptions="Center"
             HorizontalOptions="Center" />
 
-        <Label 
+        <Label
             Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
+            VerticalOptions="Center"
             HorizontalOptions="Center" />
-        
-        <Entry x:Name="myEntry" Text="abc"></Entry>
+
+        <Entry x:Name="myEntry" Text="abc" />
     </VerticalStackLayout>
-</views:BaseView>
+</BaseView>
