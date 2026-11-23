@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<BaseView x:Class="MauiAppDemo.Wizard.Demo.HeatPumpPhotovoltaicPage"
+          x:DataType="HeatPumpPhotovoltaicViewModel"
+          Title="Heat pump: Photovoltaic">
+
+    <Grid RowDefinitions="*,Auto" Padding="20" RowSpacing="15">
+        <VerticalStackLayout Spacing="15">
+            <Label Text="{Binding PeakPower, StringFormat='Peak power: {0} kWp'}" />
+            <Stepper Minimum="1" Maximum="30" Increment="0.5" Value="{Binding PeakPower}" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Switch IsToggled="{Binding HasBatteryStorage}" />
+                <Label Text="Battery storage" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+            <Button Grid.Column="1" Text="Next" Command="{Binding NextCommand}" />
+        </Grid>
+    </Grid>
+</BaseView>

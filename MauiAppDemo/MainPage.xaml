@@ -55,6 +55,8 @@
 
             <Button Text="Throw exception" Command="{Binding ThrowExceptionCommand}" />
 
+            <Button Text="Heat pump wizard" Command="{Binding StartHeatPumpWizardCommand}" />
+
         </VerticalStackLayout>
     </ScrollView>
 

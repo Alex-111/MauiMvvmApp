@@ -1,6 +1,7 @@
 using CommunityToolkit.Maui;
 using MauiAppDemo.ViewModels;
 using MauiAppDemo.Views;
+using MauiAppDemo.Wizard.Demo;
 using Microsoft.Extensions.Logging;
 
 namespace MauiAppDemo;
@@ -35,6 +36,13 @@ public static class MauiProgram
         builder.Services.AddTransient<LayoutTest1>();
 
         builder.Services.AddTransientPopup<ConfirmPopup, ConfirmPopupViewModel>();
+
+        // Heat pump wizard demo: one singleton wizard holding the shared data + its pages
+        builder.Services.AddSingleton<HeatPumpWizard>();
+        builder.Services.AddTransient<HeatPumpGeneralPage, HeatPumpGeneralViewModel>();
+        builder.Services.AddTransient<HeatPumpHeatingPage, HeatPumpHeatingViewModel>();
+        builder.Services.AddTransient<HeatPumpCoolingPage, HeatPumpCoolingViewModel>();
+        builder.Services.AddTransient<HeatPumpPhotovoltaicPage, HeatPumpPhotovoltaicViewModel>();
 
         return builder.Build();
     }

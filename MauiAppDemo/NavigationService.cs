@@ -12,6 +12,9 @@ public class NavigationService(IServiceProvider services)
     public Task ShowAlert(Exception ex) =>
         CurrentShell.DisplayAlertAsync("Error", ex.ToString(), "OK");
 
+    public Task ShowAlert(string title, string message) =>
+        CurrentShell.DisplayAlertAsync(title, message, "OK");
+
     public Task NavigateAsync(string path) =>
         NavigateAsync<ViewModelParameterBase>(path, null);
 

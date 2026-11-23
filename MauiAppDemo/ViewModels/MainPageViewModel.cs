@@ -1,14 +1,41 @@
+using System.Text;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiAppDemo.Wizard.Demo;
 
 namespace MauiAppDemo.ViewModels;
 
-public partial class MainPageViewModel(NavigationService navigationService, IPopupService popupService)
+public partial class MainPageViewModel(NavigationService navigationService, IPopupService popupService, HeatPumpWizard heatPumpWizard)
     : BaseViewModel(navigationService)
 {
+    [RelayCommand]
+    private async Task StartHeatPumpWizardAsync()
+    {
+        var configuration = await heatPumpWizard.RunAsync();
+
+        if (configuration is not null)
+            await NavigationService.ShowAlert("Heat pump configured", Describe(configuration));
+    }
+
+    private static string Describe(HeatPumpConfiguration configuration)
+    {
+        var text = new StringBuilder().AppendLine($"Name: {configuration.Name}");
+
+        if (configuration.HasHeating)
+            text.AppendLine($"Heating: {configuration.HeatingFlowTemperature} °C flow, {(configuration.HasUnderfloorHeating ? "underfloor heating" : "radiators")}");
+        if (configuration.HasCooling)
+            text.AppendLine($"Cooling: {configuration.CoolingRoomTemperature} °C room temperature");
+        if (configuration.HasPhotovoltaic)
+            text.AppendLine($"Photovoltaic: {configuration.PhotovoltaicPeakPower} kWp{(configuration.HasBatteryStorage ? " with battery storage" : "")}");
+        if (!configuration.HasHeating && !configuration.HasCooling && !configuration.HasPhotovoltaic)
+            text.AppendLine("No features selected");
+
+        return text.ToString();
+    }
+
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ShowToastCommand))]
     public partial string Message { get; set; } = "Hello from .NET 11!";

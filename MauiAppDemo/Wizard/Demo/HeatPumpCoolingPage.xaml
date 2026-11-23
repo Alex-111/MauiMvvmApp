@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<BaseView x:Class="MauiAppDemo.Wizard.Demo.HeatPumpCoolingPage"
+          x:DataType="HeatPumpCoolingViewModel"
+          Title="Heat pump: Cooling">
+
+    <Grid RowDefinitions="*,Auto" Padding="20" RowSpacing="15">
+        <VerticalStackLayout Spacing="15">
+            <Label Text="{Binding RoomTemperature, StringFormat='Target room temperature: {0} °C'}" />
+            <Stepper Minimum="18" Maximum="28" Increment="0.5" Value="{Binding RoomTemperature}" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+            <Button Grid.Column="1" Text="Next" Command="{Binding NextCommand}" />
+        </Grid>
+    </Grid>
+</BaseView>

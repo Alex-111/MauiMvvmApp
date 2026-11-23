@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<BaseView x:Class="MauiAppDemo.Wizard.Demo.HeatPumpGeneralPage"
+          x:DataType="HeatPumpGeneralViewModel"
+          Title="Heat pump: General">
+
+    <Grid RowDefinitions="*,Auto" Padding="20" RowSpacing="15">
+        <VerticalStackLayout Spacing="15">
+            <Label Text="Name" />
+            <Entry Text="{Binding Name}" Placeholder="Name of the installation" />
+
+            <Label Text="Which features does the installation have?" FontAttributes="Bold" />
+            <HorizontalStackLayout Spacing="10">
+                <Switch IsToggled="{Binding HasHeating}" />
+                <Label Text="Heating" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <Switch IsToggled="{Binding HasCooling}" />
+                <Label Text="Cooling" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <Switch IsToggled="{Binding HasPhotovoltaic}" />
+                <Label Text="Photovoltaic" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+            <Button Grid.Column="1" Text="Next" Command="{Binding NextCommand}" />
+        </Grid>
+    </Grid>
+</BaseView>

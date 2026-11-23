@@ -3,3 +3,5 @@
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "MauiAppDemo")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "MauiAppDemo.Views")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "MauiAppDemo.ViewModels")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "MauiAppDemo.Wizard.Core")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/dotnet/maui/global", "MauiAppDemo.Wizard.Demo")]
